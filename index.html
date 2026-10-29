@@ -26,16 +26,16 @@
       <aside class="output-column" aria-label="提示词工作区">
         <section class="output-panel">
           <div class="output-header"><div><p class="eyebrow">YOUR PROMPT</p><h2>生成提示词</h2></div><span class="state-tag" id="promptState">等待生成</span></div>
-          <p class="output-description">保留参考人物，统一造型与三视图细节。</p>
+          <p class="output-description">复制提示词到生图网站时，一并上传人物参考照片。建议正面、胸部以上，五官清晰无遮挡。</p>
           <button class="primary-button generate-button" id="generate" type="button"><span id="generateLabel">生成提示词</span><span aria-hidden="true">↗</span></button>
           <div class="prompt-shell"><label class="sr-only" for="prompt">角色卡生图提示词，可编辑</label><textarea id="prompt" spellcheck="false" placeholder="完成左侧设定后，点击「生成提示词」。&#10;&#10;这里会生成完整的生图指令，你也可以继续编辑。"></textarea></div>
           <div class="output-footer"><span id="promptCount">英文提示词 · 自定义内容原样保留</span><button class="copy-button" id="copy" type="button" disabled><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M16 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h1" stroke="currentColor" stroke-width="1.6"/></svg><span id="copyLabel">复制提示词</span></button></div>
           <p class="copy-help" id="copyHelp" hidden>提示词已选中，请按 ⌘C 或 Ctrl+C 复制。</p>
         </section>
-        <section class="reference-panel"><div class="reference-heading"><h3>目标排版</h3><span>AI 示例</span></div><button class="example-button" id="exampleOpen" aria-label="放大查看角色卡示例" type="button"><img src="assets/character-example.jpg" alt="三视图角色卡：左侧正面服装，中间背面全身，右侧胸部以上人像"><span aria-hidden="true">↗</span></button><p>复制提示词到生图网站时，<strong>一并上传人物参考照片</strong>。建议正面、胸部以上，五官清晰无遮挡。</p></section>
+        <section class="reference-panel"><div class="reference-heading"><h3>目标排版</h3><span>AI 示例</span></div><button class="example-button" id="exampleOpen" aria-label="放大查看角色卡示例" type="button"><img src="assets/character-example.jpg" alt="三视图角色卡：左侧正面服装，中间背面全身，右侧胸部以上人像"><span aria-hidden="true">↗</span></button></section>
       </aside>
     </div>
-    <footer class="page-footer"><span>Character Studio</span><span>提示词在本机组装 · 无需 API Key</span></footer>
+    <footer class="page-footer"><span>Character Studio by Jas</span><span>提示词在本机组装 · 无需 API Key</span></footer>
   </main>
   <dialog id="exampleDialog" aria-label="角色卡示例大图"><button id="exampleClose" class="dialog-close" type="button" aria-label="关闭角色卡示例">×</button><img src="assets/character-example.jpg" alt="三视图角色卡完整示例"></dialog>
   <div class="toast" id="toast" role="status" hidden></div>
