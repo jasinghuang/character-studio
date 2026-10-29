@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="组装角色设定，一键生成并复制角色卡生图提示词。">
+  <title>Character Studio · 角色卡提示词</title>
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/prompt-engine.js" defer></script>
+  <script src="assets/character-prompt.js" defer></script>
+  <script src="assets/schema.js" defer></script>
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="./" aria-label="Character Studio 首页"><span class="brand-mark">C<span>·</span></span><span>character studio</span></a><span class="top-note">角色卡提示词工具</span></header>
+  <main>
+    <div class="intro"><div><p class="eyebrow">CHARACTER REFERENCE SHEET</p><h1>从角色设定，到生图提示词。</h1><p class="subtitle">设定外形与表情，复制提示词，去你喜欢的生图网站创作。</p></div><div class="format-badge"><span class="frame-icon" aria-hidden="true"><i></i><i></i><i></i></span><span>三视图角色卡<small>16:9 · 固定排版</small></span></div></div>
+    <div class="workspace">
+      <section class="settings" aria-label="角色设定">
+        <div class="section-top"><h2>角色设定</h2><button class="text-button" id="reset" type="button">恢复默认</button></div>
+        <form id="settingsForm"><div id="fields"></div></form>
+        <p class="draft-note" id="draftStatus" role="status">设定自动保存在当前浏览器</p>
+      </section>
+      <aside class="output-column" aria-label="提示词工作区">
+        <section class="output-panel">
+          <div class="output-header"><div><p class="eyebrow">YOUR PROMPT</p><h2>生成提示词</h2></div><span class="state-tag" id="promptState">等待生成</span></div>
+          <p class="output-description">保留参考人物，统一造型与三视图细节。</p>
+          <button class="primary-button generate-button" id="generate" type="button"><span id="generateLabel">生成提示词</span><span aria-hidden="true">↗</span></button>
+          <div class="prompt-shell"><label class="sr-only" for="prompt">角色卡生图提示词，可编辑</label><textarea id="prompt" spellcheck="false" placeholder="完成左侧设定后，点击「生成提示词」。&#10;&#10;这里会生成完整的生图指令，你也可以继续编辑。"></textarea></div>
+          <div class="output-footer"><span id="promptCount">英文提示词 · 自定义内容原样保留</span><button class="copy-button" id="copy" type="button" disabled><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M16 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h1" stroke="currentColor" stroke-width="1.6"/></svg><span id="copyLabel">复制提示词</span></button></div>
+          <p class="copy-help" id="copyHelp" hidden>提示词已选中，请按 ⌘C 或 Ctrl+C 复制。</p>
+        </section>
+        <section class="reference-panel"><div class="reference-heading"><h3>目标排版</h3><span>AI 示例</span></div><button class="example-button" id="exampleOpen" aria-label="放大查看角色卡示例" type="button"><img src="assets/character-example.jpg" alt="三视图角色卡：左侧正面服装，中间背面全身，右侧胸部以上人像"><span aria-hidden="true">↗</span></button><p>复制提示词到生图网站时，<strong>一并上传人物参考照片</strong>。建议正面、胸部以上，五官清晰无遮挡。</p></section>
+      </aside>
+    </div>
+    <footer class="page-footer"><span>Character Studio</span><span>提示词在本机组装 · 无需 API Key</span></footer>
+  </main>
+  <dialog id="exampleDialog" aria-label="角色卡示例大图"><button id="exampleClose" class="dialog-close" type="button" aria-label="关闭角色卡示例">×</button><img src="assets/character-example.jpg" alt="三视图角色卡完整示例"></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
