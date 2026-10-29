@@ -10,7 +10,7 @@ async function setup(){
 }
 test('默认角色卡保留身份参考、三等分布局、胸像边界与禁止文字规则',async()=>{
   const {schema,build}=await setup();const text=build(schema.defaults);
-  for(const pattern of [/16:9 aspect ratio/,/Neutral medium-grey seamless backdrop — a clear mid-grey, never white\./,/each occupying one third/,/LEFT VIEW:/,/CENTER VIEW:/,/RIGHT VIEW:/,/mid-chest level/,/same face/,/no watermarks/])assert.match(text,pattern);
+  for(const pattern of [/16:9 aspect ratio/,/Very light neutral-grey seamless backdrop, approximately #EDEDED/,/each occupying one third/,/LEFT VIEW:/,/CENTER VIEW:/,/RIGHT VIEW:/,/mid-chest level/,/same face/,/no watermarks/])assert.match(text,pattern);
   assert.doesNotMatch(text,/undefined|null|__custom|与图片相同|API Key/);
 });
 test('每一个外形、发型、服装及情绪预设都会改变提示词',async()=>{
