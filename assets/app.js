@@ -31,6 +31,7 @@
     return '<button type="button" class="chip'+(selected?' selected':'')+'" data-choice="'+escape(field.key)+'" data-value="'+escape(value)+'" aria-pressed="'+selected+'" '+extra+'>'+escape(value)+'</button>';
   }
   function renderField(field) {
+    if (field.photoStyles && !field.photoStyles.includes(values.photoStyle)) return '';
     const v = values[field.key] || '', isCustom = modes[field.key] === 'custom';
     let body = '';
     if (field.type === 'choice') {

@@ -19,7 +19,8 @@
             "3D 渲染",
             "自定义"
           ],
-          "dense": true
+          "dense": true,
+          "help": "真人摄影支持皮肤状态与肤质细节设置。"
         },
         {
           "type": "choice",
@@ -64,6 +65,22 @@
             "自定义"
           ],
           "dense": true
+        },
+        {
+          "type": "choice",
+          "key": "skinState",
+          "label": "皮肤状态",
+          "options": ["自然半哑光", "运动后微汗", "雨后湿润", "轻薄底妆"],
+          "photoStyles": ["逼真真人", "超写实"],
+          "help": "每次选择一种状态，系统自动匹配皮肤的反光与湿润程度。"
+        },
+        {
+          "type": "choice",
+          "key": "skinDetail",
+          "label": "肤质细节强度",
+          "options": ["柔和", "自然", "精细"],
+          "photoStyles": ["逼真真人", "超写实"],
+          "help": "主要影响右侧胸像。保留参考人物的年龄感与已有特征，不额外添加瑕疵。"
         }
       ]
     },
@@ -193,7 +210,7 @@
     {
       "id": "emotion",
       "title": "表情与细节",
-      "description": "表情应用于右侧人像，其他视图保持一致。",
+      "description": "表情与视线应用于右侧人像，肤色与已有特征保持一致。",
       "fields": [
         {
           "type": "cascade",
@@ -292,12 +309,19 @@
           ]
         },
         {
+          "type": "choice",
+          "key": "gaze",
+          "label": "视线",
+          "options": ["随表情", "看向镜头", "看向画面左侧", "看向画面右侧", "微微垂眸", "闭眼"],
+          "help": "视线控制眼睛朝向，头部角度保持所选设置；眨眼时只控制睁开的眼睛。"
+        },
+        {
           "type": "textarea",
           "key": "emoNote",
           "label": "自定义情绪",
           "note": "（选填）",
           "placeholder": "例如：嘴角微笑，眼神放松，像在和朋友交流",
-          "help": "填写后将优先使用这段描述。"
+          "help": "填写后优先使用这段描述，覆盖预设情绪与视线；可以一起描述眼神。"
         }
       ]
     }
@@ -307,6 +331,8 @@
     "height": "与图片相同",
     "bodyType": "与图片相同",
     "skinTone": "与图片相同",
+    "skinState": "自然半哑光",
+    "skinDetail": "自然",
     "hairStyle": "与图片相同",
     "outfit": "与图片相同",
     "hairColor": "与图片相同",
@@ -314,6 +340,7 @@
     "portraitAngle": "正面",
     "etc": "",
     "emotion": "平静",
+    "gaze": "随表情",
     "emoNote": ""
   }
 };

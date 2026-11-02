@@ -31,3 +31,69 @@ test('仅修改发色不会产生重复 hair，自定义风格按原文生效',a
   const {schema,build}=await setup();const text=build({...schema.defaults,hairColor:'黑色',photoStyle:'纸感水彩插画'});
   assert.match(text,/CHARACTER: black hair\./);assert.doesNotMatch(text,/hair hair/);assert.match(text,/纸感水彩插画/);assert.doesNotMatch(text,/This is a real photograph/);
 });
+
+test('真人肤质按景别分配，保留参考身份且不在全身视图堆叠面部细节',async()=>{
+  const {schema,build}=await setup();const text=build(schema.defaults);
+  assert.equal(schema.defaults.photoStyle,'逼真真人');
+  assert.match(text,/SKIN STATE: Natural semi-matte skin/);
+  const fullBody=text.slice(text.indexOf('LEFT VIEW:'),text.indexOf('RIGHT VIEW:'));
+  assert.match(fullBody,/overall tone and broad surface reflectance only/);
+  assert.doesNotMatch(fullBody,/pores|iris|under-eye|vellus|lip lines/i);
+  const portrait=text.slice(text.indexOf('RIGHT VIEW:'));
+  for(const pattern of [/PORTRAIT SKIN:/,/fine forehead texture/,/delicate thin under-eye texture/,/vertical lip lines/,/SKIN CONSISTENCY:/,/reference subject's age/])assert.match(portrait,pattern);
+  assert.doesNotMatch(text,/extreme skin detail|adult skin|perfect flawless/i);
+});
+
+test('四种皮肤状态互斥，细节强度独立于状态，旧参数和非法枚举使用自然默认值',async()=>{
+  const {schema,build}=await setup();
+  const stateMarkers=['Natural semi-matte skin','Light post-exercise perspiration','Residual rain moisture','A thin, sheer makeup base'];
+  const stateField=schema.sections.flatMap(s=>s.fields).find(f=>f.key==='skinState');
+  for(const [i,state] of stateField.options.entries()){
+    for(const detail of ['柔和','自然','精细']){
+      const text=build({...schema.defaults,skinState:state,skinDetail:detail});
+      assert.ok(text.includes(stateMarkers[i]),`${state}/${detail}`);
+      for(const [j,marker] of stateMarkers.entries())if(j!==i)assert.ok(!text.includes(marker),`${state} 混入其他皮肤状态`);
+    }
+  }
+  const old={...schema.defaults};delete old.skinState;delete old.skinDetail;delete old.gaze;
+  assert.equal(build(old),build(schema.defaults));
+  assert.equal(build({...old,skinState:'__proto__',skinDetail:'invalid',gaze:'invalid'}),build(schema.defaults));
+  const soft=build({...schema.defaults,skinDetail:'柔和'});
+  const fine=build({...schema.defaults,skinDetail:'精细'});
+  assert.doesNotMatch(soft,/pores around the nose|vellus hairs/);
+  assert.match(fine,/vellus hairs/);
+});
+
+test('非摄影风格不叠加真人肤质，隐藏的皮肤选项不影响输出',async()=>{
+  const {schema,build}=await setup();
+  for(const photoStyle of ['游戏角色','动画电影','3D 渲染','纸感水彩插画']){
+    const base=build({...schema.defaults,photoStyle});
+    assert.equal(base,build({...schema.defaults,photoStyle,skinState:'雨后湿润',skinDetail:'精细'}));
+    assert.doesNotMatch(base,/SKIN STATE:|PORTRAIT SKIN:|SKIN CONSISTENCY:|pores|vellus|iris variation|real photograph/);
+  }
+  assert.match(build({...schema.defaults,photoStyle:'超写实'}),/PORTRAIT SKIN:/);
+});
+
+test('所有预设情绪在闭眼时不再要求睁眼，眨眼与明确视线保持一致',async()=>{
+  const {schema,build}=await setup();
+  const emotions=schema.sections.flatMap(s=>s.fields).find(f=>f.key==='emotion').groups.flatMap(g=>g[1]);
+  for(const emotion of emotions){
+    const text=build({...schema.defaults,emotion,gaze:'闭眼'});
+    assert.match(text,/Both eyes are gently closed/);
+    assert.doesNotMatch(text,/bright eyes|sparkling eyes|wide eyes|dilated pupils|one eye closed|angry glare|icy stare|attentive eyes|sharp gaze|lowered gaze|gaze slightly averted|unfocused eyes|drooping eyelids|half-closed eyes|half-lidded eyes|eyes crinkled|iris variation/,emotion);
+  }
+  const wink=build({...schema.defaults,emotion:'眨眼',gaze:'看向画面右侧',portraitAngle:'四分之三（左）'});
+  for(const pattern of [/playful wink, one eye closed/,/right edge of the image/,/head turned slightly to the left/,/only to the open eye/])assert.match(wink,pattern);
+  const shy=build({...schema.defaults,emotion:'害羞微笑',gaze:'看向镜头'});
+  assert.match(shy,/toward the camera/);assert.doesNotMatch(shy,/lowered gaze/);
+});
+
+test('自定义情绪完整覆盖预设情绪、视线与睁眼细节，避免自由描述冲突',async()=>{
+  const {schema,build}=await setup();
+  const text=build({...schema.defaults,emotion:'眨眼',gaze:'看向镜头',emoNote:'双眼轻闭，平静地微笑'});
+  assert.match(text,/Expression: 双眼轻闭，平静地微笑\./);
+  assert.doesNotMatch(text,/Gaze:|playful wink|iris variation|eye rim/);
+  assert.equal(text,build({...schema.defaults,emotion:'愤怒',gaze:'闭眼',emoNote:'双眼轻闭，平静地微笑'}));
+  const flustered=build({...schema.defaults,emotion:'慌乱'});
+  assert.doesNotMatch(flustered,/sweating drop/);
+});
