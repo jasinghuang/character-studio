@@ -1,0 +1,107 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Character Studio · 提示词出图对照</title>
+<style>
+:root{font-family:system-ui,-apple-system,"PingFang SC",sans-serif;color:#20221c;background:#f7f8f4;line-height:1.65}*{box-sizing:border-box}body{margin:0}main{max-width:1440px;padding:32px 24px 64px;margin:auto}h1{font-size:30px;margin:8px 0 12px}h2{font-size:19px;margin:28px 0 12px}p{margin:8px 0;color:#555d50}.eyebrow{font-size:12px;letter-spacing:2px;color:#616b58}.conclusion{padding:20px 24px;background:#fff;border:1px solid #dce2d3;border-left:5px solid #91b64c;border-radius:12px;margin:22px 0}.conclusion strong{font-size:19px}.toolbar{position:sticky;top:0;z-index:2;background:#f7f8f4f2;backdrop-filter:blur(10px);padding:12px 0;display:flex;gap:10px;align-items:center;border-bottom:1px solid #dde2d5}button{font:inherit;padding:8px 15px;border:1px solid #ccd4c0;border-radius:8px;background:#fff;cursor:pointer}button[aria-pressed=true]{background:#26331c;color:white}.toolbar span{font-size:12px;color:#626b5a}.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}figure{margin:0;background:white;border:1px solid #dde2d5;border-radius:12px;overflow:hidden}figcaption{padding:10px 15px;font-weight:650}.frame{display:block;aspect-ratio:1672/941;overflow:hidden;background:#eceee7}.frame img{width:100%;height:auto;display:block}.portrait .frame{aspect-ratio:1672/2823}.portrait .frame img{width:300%;max-width:none;transform:translateX(-66.6666667%)}table{width:100%;border-collapse:collapse;background:white;margin:18px 0}td,th{padding:11px 14px;text-align:left;border:1px solid #dde2d5;vertical-align:top}th{background:#edf1e7}details{background:white;border:1px solid #dde2d5;border-radius:10px;padding:14px 18px;margin:14px 0}summary{font-weight:650;cursor:pointer}.translations{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}pre{font:13px/1.7 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0}.limitations{font-size:13px}.reference img{max-width:100%;display:block}a{color:#3c611d}@media(max-width:680px){main{padding:24px 14px 40px}h1{font-size:24px}.pair,.translations{grid-template-columns:1fr}.toolbar{flex-wrap:wrap}.portrait .frame{aspect-ratio:1672/2823}td,th{padding:8px;font-size:12px}}
+</style><main><div class="eyebrow">CHARACTER STUDIO / IMAGE VALIDATION</div><h1>新增肤质规则，是否改善实际出图？</h1><p>2026-11-02 · 同一参考图、同一内置 imagegen 工具路径，旧版与新版各生成 2 张。新版使用自然半哑光／自然细节／随表情／平静。</p>
+<div class="conclusion"><strong>初步结论：尚未证实稳定的整体改善。</strong><p>局部肤质略有增强趋势，眼神与人物一致性大致相当。新版仍出现手部缺失和胸像占宽问题。此结论来自小样目视检查。</p></div>
+<div class="toolbar"><button id="full" aria-pressed="true">完整角色卡</button><button id="portrait" aria-pressed="false">右侧人像对照</button><span>点击图片可打开原图。人像模式仅改变显示范围，原文件未修改。</span></div>
+<h2>第 1 次重复</h2><div class="pair"><figure><figcaption>旧版 · 1</figcaption><a class="frame" href="before-1.png" target="_blank" aria-label="打开旧版第1张原图"><img src="before-1.png" alt="旧版第1张角色卡" loading="eager"></a></figure><figure><figcaption>新版 · 1</figcaption><a class="frame" href="after-1.png" target="_blank" aria-label="打开新版第1张原图"><img src="after-1.png" alt="新版第1张角色卡" loading="eager"></a></figure></div><h2>第 2 次重复</h2><div class="pair"><figure><figcaption>旧版 · 2</figcaption><a class="frame" href="before-2.png" target="_blank" aria-label="打开旧版第2张原图"><img src="before-2.png" alt="旧版第2张角色卡" loading="eager"></a></figure><figure><figcaption>新版 · 2</figcaption><a class="frame" href="after-2.png" target="_blank" aria-label="打开新版第2张原图"><img src="after-2.png" alt="新版第2张角色卡" loading="eager"></a></figure></div>
+<h2>逐项观察</h2><table><thead><tr><th>项目</th><th>本轮结果</th></tr></thead><tbody>
+<tr><td>人物、发型、服装保持</td><td>两版总体接近共同参考，未观察到明确且可重复的新版优势。</td></tr>
+<tr><td>面部皮肤纹理</td><td>新版面颊、鼻部的细节略显可见，但差异小；第 1 张新版的眼下阴影也更明显，增加纹理不等于自然感提高。当前图像尺寸不足以可靠核验全部微细节。</td></tr>
+<tr><td>高光与光线</td><td>两版均偏柔光，没有观察到新版稳定呈现更清楚的指定左侧主光结构。</td></tr>
+<tr><td>眼神</td><td>平静、朝镜头的效果大致相当，未证明新增文字带来明显改善。</td></tr>
+<tr><td>手部与三视图布局</td><td>新版第 2 张左侧手部不完整；所有样本右侧胸像的肩部／衣服都向三分之一边界以外扩展。</td></tr>
+</tbody></table>
+<h2>本轮能说明什么</h2><p>新增规则能够进入生成请求，但“写入要求”与“模型稳定执行”需要分别判断。当前样本支持继续保留这些可控模块，但不足以宣称人物明显更真实或给出改善百分比。</p>
+<p class="limitations">限制：每版仅 2 张；未进行盲评；工具不提供固定种子和精确模型版本；使用已有生成三视图作为参考，会强化其构图与外观；要求 2048×1152，实际返回均为 1672×941。本轮只覆盖默认皮肤状态与自然细节，未测试微汗、雨后、底妆及各类表情。</p>
+<h2>可复查的输入</h2><details class="reference"><summary>共同参考图</summary><img src="reference.jpg" alt="双方共同使用的原 AI 示例三视图"></details>
+<details><summary>旧版完整提示词 · 中英对照</summary><p>实际生成输入为英文；中文仅作语义对照。两次重复使用相同英文输入。</p><div class="translations"><section><h3>English</h3><pre>Use the attached image as the common reference for the person&#x27;s identity, hairstyle, body proportions and clothing. Generate a new character reference sheet following the instructions below. Output a 16:9 landscape image, 2048 by 1152 pixels. Do not add comparison labels or extra objects.
+
+Professional character reference sheet, three views arranged side by side, each occupying one third of the frame width, 16:9 aspect ratio. Very light neutral-grey seamless backdrop, approximately #EDEDED — bright, near-white pale grey, not medium grey or dark grey. Keep the backdrop evenly lit and consistent in tone, with only faint soft contact shadows at the feet. All three views share this one single continuous backdrop — no divider lines, no borders, no gaps, no frames, no separators between the views; the backdrop flows seamlessly across the entire image as one unbroken space.
+
+CHARACTER: exactly match the attached reference image — same face, hair, body, and outfit.
+
+Gender and facial features must exactly match the attached reference image — same gender, same face, same facial structure. Never change the gender from the reference.
+
+LEFT VIEW: full body, front view, standing upright in a natural relaxed stance like a fashion lookbook photo, arms hanging straight down naturally at the sides, hands relaxed with fingers gently curled inward. Not an A-pose, not a T-pose, not a 3D-model rig pose. The outfit is displayed in invisible ghost-mannequin style, as if worn by an invisible person: above the collar there is simply empty space blending into the background. No head, no face, no neck stump, no cut surface, no severed edge, no visible flesh above the collar — the collar opening is just empty.
+
+CENTER VIEW: full body, back view, same standing pose, same outfit. The head is kept in this view, showing the back of the head and the hairstyle from behind. No face visible.
+
+RIGHT VIEW: one tight chest-up portrait, front view facing straight toward the camera, the bottom edge of the frame cuts at mid-chest level — only the head, shoulders and upper chest are visible, the face fills most of its section, face in sharp focus. Do not show the waist, stomach, or lower torso. Fitted inside its own one-third section at the same width and scale proportion as the two full-body views — it must not spread wider than the other views. Expression: calm neutral expression, mouth fully closed, relaxed lips. This portrait is the only place the face appears on this sheet.
+
+Identical character, hair, and outfit across all views. Professional studio softbox lighting, consistent proportions between all three views. This is a real photograph shot on a professional camera — realistic human skin texture with visible pores, natural photographic color and lighting. Not a 3D render, not CGI, not a video game character model, not digital art, not an illustration.
+
+Absolutely no text, no labels, no captions, no watermarks, no letters, no numbers, no logos anywhere in the image. Visual panels only.
+</pre></section><section><h3>中文</h3><pre>使用附图作为双方共同的人物身份、发型、身体比例和服装参考。按以下指令生成一张新的角色参考图。输出 16:9 横图，2048×1152 像素。不要添加对比标签或额外物体。
+
+专业角色参考图，三个视图并排排列，各占画面宽度的三分之一，画面比例 16:9。非常浅的中性灰无缝背景，约为 #EDEDED——明亮、接近白色的浅灰，避免中灰或深灰。背景均匀受光、色调一致，脚下仅保留微弱柔和的接触阴影。三个视图共用一个连续背景——没有分隔线、边框、间隙、画框或其他分隔；背景贯穿整张图，保持完整连续。
+
+人物：严格匹配附图——相同的脸、头发、身体和服装。
+
+性别与五官必须严格匹配附图——相同的性别、面容和面部结构。不得改变参考人物的性别。
+
+左侧视图：全身正面，像时尚型录照片一样，以自然放松的姿态直立；双臂自然垂于身体两侧，双手放松，手指轻轻向内弯曲。不是 A 字姿态、T 字姿态或三维模型绑定姿态。服装采用隐形模特效果，仿佛穿在一个隐形人身上：衣领以上只有与背景融合的空白。没有头、脸、脖子残段、切面、断边或衣领以上可见的皮肤——领口就是空的。
+
+中间视图：全身背面，相同的站姿与服装。该视图保留头部，从后方展示后脑和发型，不露出脸。
+
+右侧视图：一张紧凑的胸像，正面朝向镜头；画面下缘截在胸部中段，只展示头、肩和上胸，脸占据该区域的大部分面积，面部清晰对焦。不要展示腰、腹或更低的躯干。保持在自身三分之一宽的区域内，与两个全身视图遵循相同的分栏宽度和尺度关系，不向其他视图扩张。表情：平静自然，完全闭嘴，嘴唇放松。这张胸像是整张参考图唯一展示面部的位置。
+
+所有视图的人物、发型与服装一致。使用专业摄影棚柔光箱照明，三个视图的比例一致。这是一张使用专业相机拍摄的真实照片——真实人类皮肤纹理、可见毛孔、自然摄影色彩与光线。不是三维渲染、CGI、游戏角色模型、数字艺术或插画。
+
+图中绝对不要出现文字、标签、说明、水印、字母、数字或标志。仅包含视觉画面。
+</pre></section></div></details><details><summary>新版完整提示词 · 中英对照</summary><p>实际生成输入为英文；中文仅作语义对照。两次重复使用相同英文输入。</p><div class="translations"><section><h3>English</h3><pre>Use the attached image as the common reference for the person&#x27;s identity, hairstyle, body proportions and clothing. Generate a new character reference sheet following the instructions below. Output a 16:9 landscape image, 2048 by 1152 pixels. Do not add comparison labels or extra objects.
+
+Professional character reference sheet, three views arranged side by side, each occupying one third of the frame width, 16:9 aspect ratio. Very light neutral-grey seamless backdrop, approximately #EDEDED — bright, near-white pale grey, not medium grey or dark grey. Keep the backdrop evenly lit and consistent in tone, with only faint soft contact shadows at the feet. All three views share this one single continuous backdrop — no divider lines, no borders, no gaps, no frames, no separators between the views; the backdrop flows seamlessly across the entire image as one unbroken space.
+
+STYLE: This is a real photograph shot on a professional camera — natural photographic color, believable anatomy and material response, with detail appropriate to each view. Not a 3D render, not CGI, not a video game character model, not digital art, not an illustration.
+
+CHARACTER: exactly match the attached reference image — same face, hair, body, and outfit.
+
+Gender and facial features must exactly match the attached reference image — same gender, same face, same facial structure. Never change the gender from the reference.
+
+LIGHTING: One large soft studio key light from camera-left, with gentle fill preserving facial structure on the shadow side. Smooth tonal transitions follow the forehead, nose and cheekbones. Keep this lighting setup consistent across all views, with the pale-grey background evenly lit separately; skin highlights follow the chosen surface state.
+
+SKIN STATE: Natural semi-matte skin, with restrained surface moisture and no added sweat or rain droplets.
+
+LEFT VIEW: full body, front view, standing upright in a natural relaxed stance like a fashion lookbook photo, arms hanging straight down naturally at the sides, hands relaxed with fingers gently curled inward. Not an A-pose, not a T-pose, not a 3D-model rig pose. The outfit is displayed in invisible ghost-mannequin style, as if worn by an invisible person: above the collar there is simply empty space blending into the background. No head, no face, no neck stump, no cut surface, no severed edge, no visible flesh above the collar — the collar opening is just empty. For any exposed skin in this full-body view, describe overall tone and broad surface reflectance only, clearly distinct from clothing sheen. Keep detail appropriate to this view&#x27;s scale.
+
+CENTER VIEW: full body, back view, same standing pose, same outfit. The head is kept in this view, showing the back of the head and the hairstyle from behind. No face visible. For any exposed skin in this full-body view, describe overall tone and broad surface reflectance only, clearly distinct from clothing sheen. Keep detail appropriate to this view&#x27;s scale.
+
+RIGHT VIEW: one tight chest-up portrait, front view facing straight toward the camera, the bottom edge of the frame cuts at mid-chest level — only the head, shoulders and upper chest are visible, the face fills most of its section, face in sharp focus. Do not show the waist, stomach, or lower torso. Fitted inside its own one-third section at the same width and scale proportion as the two full-body views — it must not spread wider than the other views. Expression: calm neutral expression, mouth fully closed, relaxed lips. Gaze: When an eye is open, let its gaze rest naturally toward the camera, with attention consistent with the chosen expression. Keep the selected head angle; eye direction does not turn the head. PORTRAIT SKIN: At chest-up portrait scale, use fine forehead texture, slightly more noticeable pores around the nose, naturally varied cheek texture, delicate thin under-eye texture rather than coarse pores, and subtle vertical lip lines. Keep the amount of texture faithful to the reference subject and readable without exaggeration. Retain the subtle color variation, marks and age-appropriate fine creases supported by the reference; do not add freckles, scars or wrinkles merely to imply realism. Temporary changes arise only from the selected expression or skin state. Small, broken highlights may appear on the upper nose bridge, upper cheekbones and lower-lip center only where reached by the key light. The broad cheeks and jaw remain low-reflectance; avoid an all-over oily sheen. Let the selected expression naturally shape the eyelids, cheeks and lips; fine texture follows the current facial contours. For visibly open eyes only, retain natural iris variation and a delicate moist eye rim, with restrained catchlights matching the single studio key light. Let eyelid tension follow the expression. This portrait is the only place the face appears on this sheet.
+
+Identical character, hair, and outfit across all views, with consistent proportions.
+
+SKIN CONSISTENCY: Keep the requested skin tone, reference-visible marks and chosen skin state consistent wherever skin is visible across the views. Preserve the reference subject&#x27;s age, facial proportions and natural asymmetry; only shading and apparent detail change with orientation and view scale. Avoid uniform stamped-on texture, excessive smoothing and waxy or plastic skin.
+
+Absolutely no text, no labels, no captions, no watermarks, no letters, no numbers, no logos anywhere in the image. Visual panels only.
+</pre></section><section><h3>中文</h3><pre>使用附图作为双方共同的人物身份、发型、身体比例和服装参考。按以下指令生成一张新的角色参考图。输出 16:9 横图，2048×1152 像素。不要添加对比标签或额外物体。
+
+专业角色参考图，三个视图并排排列，各占画面宽度的三分之一，画面比例 16:9。非常浅的中性灰无缝背景，约为 #EDEDED——明亮、接近白色的浅灰，避免中灰或深灰。背景均匀受光、色调一致，脚下仅保留微弱柔和的接触阴影。三个视图共用一个连续背景——没有分隔线、边框、间隙、画框或其他分隔；背景贯穿整张图，保持完整连续。
+
+风格：这是一张使用专业相机拍摄的真实照片——自然摄影色彩、可信的人体形态与材质响应，细节符合各视图的尺度。不是三维渲染、CGI、游戏角色模型、数字艺术或插画。
+
+人物：严格匹配附图——相同的脸、头发、身体和服装。
+
+性别与五官必须严格匹配附图——相同的性别、面容和面部结构。不得改变参考人物的性别。
+
+光线：一盏大型柔和摄影棚主光从镜头左侧照入，辅以柔和补光，在暗部保留面部结构。明暗沿额头、鼻梁和颧骨平滑过渡。所有视图使用一致的照明设置，浅灰背景单独均匀照亮；皮肤高光遵循所选表面状态。
+
+皮肤状态：自然半哑光皮肤，表面湿润感克制，不额外添加汗水或雨滴。
+
+左侧视图：全身正面，像时尚型录照片一样，以自然放松的姿态直立；双臂自然垂于身体两侧，双手放松，手指轻轻向内弯曲。不是 A 字姿态、T 字姿态或三维模型绑定姿态。服装采用隐形模特效果，仿佛穿在一个隐形人身上：衣领以上只有与背景融合的空白。没有头、脸、脖子残段、切面、断边或衣领以上可见的皮肤——领口就是空的。在这个全身视图中，对任何裸露皮肤只描述整体肤色与大尺度表面反光，并与衣料光泽明确区分。细节符合该视图尺度。
+
+中间视图：全身背面，相同的站姿与服装。该视图保留头部，从后方展示后脑和发型，不露出脸。在这个全身视图中，对任何裸露皮肤只描述整体肤色与大尺度表面反光，并与衣料光泽明确区分。细节符合该视图尺度。
+
+右侧视图：一张紧凑的胸像，正面朝向镜头；画面下缘截在胸部中段，只展示头、肩和上胸，脸占据该区域的大部分面积，面部清晰对焦。不要展示腰、腹或更低的躯干。保持在自身三分之一宽的区域内，与两个全身视图遵循相同的分栏宽度和尺度关系，不向其他视图扩张。表情：平静自然，完全闭嘴，嘴唇放松。视线：眼睛睁开时，自然地看向镜头，注意状态与所选表情一致。保持所选头部角度，眼睛朝向不带动头部转动。胸像肤质：在胸像尺度下，呈现细微额头纹理、鼻部周围略明显的毛孔、自然变化的面颊纹理、细薄的眼下纹理而非粗大毛孔，以及细微纵向唇纹。纹理量忠于参考人物，清晰可辨而不过度夸张。保留参考图支持的细微肤色变化、标记和符合年龄的细褶皱；不为暗示真实感而添加雀斑、疤痕或皱纹。暂时性变化仅来自所选表情或皮肤状态。只有在主光照到的位置，鼻梁上部、颧骨上缘和下唇中央才可能出现小而破碎的高光。大面积面颊与下颌保持低反射，避免全脸油亮。所选表情自然塑造眼睑、面颊与嘴唇，细微纹理贴合当前面部轮廓。仅针对可见且睁开的眼睛，保留自然虹膜层次与细腻湿润的眼缘，克制的眼神光与单一摄影棚主光匹配。眼睑张力随表情变化。这张胸像是整张参考图唯一展示面部的位置。
+
+所有视图的人物、发型与服装一致，比例一致。
+
+皮肤一致性：在各视图可见的皮肤区域中，保持所设肤色、参考图已有标记和所选皮肤状态一致。保留参考人物的年龄、五官比例与自然不对称；只有明暗与可辨细节程度随朝向和视图尺度改变。避免均匀盖章般的纹理、过度磨皮以及蜡感或塑料感皮肤。
+
+图中绝对不要出现文字、标签、说明、水印、字母、数字或标志。仅包含视觉画面。
+</pre></section></div></details>
+<p><a href="manifest.json">运行记录与文件校验信息</a></p></main><script>
+const full=document.getElementById('full'),portrait=document.getElementById('portrait');
+function mode(crop){document.body.classList.toggle('portrait',crop);full.setAttribute('aria-pressed',String(!crop));portrait.setAttribute('aria-pressed',String(crop));}
+full.addEventListener('click',()=>mode(false));portrait.addEventListener('click',()=>mode(true));
+</script></html>

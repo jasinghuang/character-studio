@@ -1,0 +1,91 @@
+{
+  "reference": "assets/character-example.jpg",
+  "beforeCommit": "1132c97",
+  "afterCommit": "7ba334bf9d8855e33aa32b289ffd592ddd1b34fe",
+  "values": {
+    "photoStyle": "逼真真人",
+    "height": "与图片相同",
+    "bodyType": "与图片相同",
+    "skinTone": "与图片相同",
+    "skinState": "自然半哑光",
+    "skinDetail": "自然",
+    "hairStyle": "与图片相同",
+    "outfit": "与图片相同",
+    "hairColor": "与图片相同",
+    "eyeColor": "",
+    "portraitAngle": "正面",
+    "etc": "",
+    "emotion": "平静",
+    "gaze": "随表情",
+    "emoNote": ""
+  },
+  "replicates": 2,
+  "generationMethod": "built-in imagegen",
+  "seedControl": "unavailable",
+  "purpose": "Exploratory matched-input comparison; reference is an existing generated three-view sheet, not an independent source portrait.",
+  "outputs": [
+    {
+      "label": "before-1",
+      "file": "before-1.png",
+      "size": [
+        1672,
+        941
+      ],
+      "sha256": "e8ea46ed24c45adecdf27fb6bb6c2550c18a1243604a4e6e52beb6f151e2df02"
+    },
+    {
+      "label": "before-2",
+      "file": "before-2.png",
+      "size": [
+        1672,
+        941
+      ],
+      "sha256": "b335fdeaccba5badd2d922e174b9e00808e77e5b3d8b93f2b687ca1d7c424fa0"
+    },
+    {
+      "label": "after-1",
+      "file": "after-1.png",
+      "size": [
+        1672,
+        941
+      ],
+      "sha256": "df14fd0f75191e7d87745c2e377d968fdd1280e4c6850accdc9fc202719e944f"
+    },
+    {
+      "label": "after-2",
+      "file": "after-2.png",
+      "size": [
+        1672,
+        941
+      ],
+      "sha256": "d3f4f4cdff65bf3dc7a18553dfae79aae0463aae224cf538783aedc9105642a8"
+    }
+  ],
+  "requestedSize": [
+    2048,
+    1152
+  ],
+  "actualSize": [
+    1672,
+    941
+  ],
+  "assessment": {
+    "method": "Qualitative visual inspection of both replicates; no blinded raters, no fixed seed, no biometric or skin-quality scoring.",
+    "conclusion": "Subtle texture differences, but no demonstrated consistent overall improvement in this small sample.",
+    "observations": [
+      "Both versions broadly retain the reference face, hairstyle and outfit.",
+      "The revised outputs suggest slightly more apparent cheek/nose texture, but the difference is small and not a robust superiority finding.",
+      "The first revised sample also has somewhat more apparent under-eye shading; more visible texture should not be equated with greater naturalness.",
+      "No clear repeatable improvement in gaze or compliance with the specified camera-left key light.",
+      "The second revised output omits one front-view hand and shows only part of the other.",
+      "Portrait clothing/shoulders extend beyond the nominal rightmost third in all samples; the revised outputs do not solve this."
+    ],
+    "limitations": [
+      "Only two replicates per version.",
+      "A generated three-view sheet is reused as reference, priming composition and appearance.",
+      "Exact model version and seed are not exposed by the tool.",
+      "The tool returned 1672x941 rather than the requested 2048x1152; skin microdetail is difficult to judge.",
+      "Only the default semi-matte/natural-detail/calm setting was compared; other states and expressions were not validated."
+    ]
+  }
+}

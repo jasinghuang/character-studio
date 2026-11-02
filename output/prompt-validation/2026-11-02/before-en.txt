@@ -1,0 +1,17 @@
+Use the attached image as the common reference for the person's identity, hairstyle, body proportions and clothing. Generate a new character reference sheet following the instructions below. Output a 16:9 landscape image, 2048 by 1152 pixels. Do not add comparison labels or extra objects.
+
+Professional character reference sheet, three views arranged side by side, each occupying one third of the frame width, 16:9 aspect ratio. Very light neutral-grey seamless backdrop, approximately #EDEDED — bright, near-white pale grey, not medium grey or dark grey. Keep the backdrop evenly lit and consistent in tone, with only faint soft contact shadows at the feet. All three views share this one single continuous backdrop — no divider lines, no borders, no gaps, no frames, no separators between the views; the backdrop flows seamlessly across the entire image as one unbroken space.
+
+CHARACTER: exactly match the attached reference image — same face, hair, body, and outfit.
+
+Gender and facial features must exactly match the attached reference image — same gender, same face, same facial structure. Never change the gender from the reference.
+
+LEFT VIEW: full body, front view, standing upright in a natural relaxed stance like a fashion lookbook photo, arms hanging straight down naturally at the sides, hands relaxed with fingers gently curled inward. Not an A-pose, not a T-pose, not a 3D-model rig pose. The outfit is displayed in invisible ghost-mannequin style, as if worn by an invisible person: above the collar there is simply empty space blending into the background. No head, no face, no neck stump, no cut surface, no severed edge, no visible flesh above the collar — the collar opening is just empty.
+
+CENTER VIEW: full body, back view, same standing pose, same outfit. The head is kept in this view, showing the back of the head and the hairstyle from behind. No face visible.
+
+RIGHT VIEW: one tight chest-up portrait, front view facing straight toward the camera, the bottom edge of the frame cuts at mid-chest level — only the head, shoulders and upper chest are visible, the face fills most of its section, face in sharp focus. Do not show the waist, stomach, or lower torso. Fitted inside its own one-third section at the same width and scale proportion as the two full-body views — it must not spread wider than the other views. Expression: calm neutral expression, mouth fully closed, relaxed lips. This portrait is the only place the face appears on this sheet.
+
+Identical character, hair, and outfit across all views. Professional studio softbox lighting, consistent proportions between all three views. This is a real photograph shot on a professional camera — realistic human skin texture with visible pores, natural photographic color and lighting. Not a 3D render, not CGI, not a video game character model, not digital art, not an illustration.
+
+Absolutely no text, no labels, no captions, no watermarks, no letters, no numbers, no logos anywhere in the image. Visual panels only.
