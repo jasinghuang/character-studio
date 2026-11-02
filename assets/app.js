@@ -50,7 +50,7 @@
     return '<div class="field"><'+(['choice','cascade'].includes(field.type)?'div':'label for="field-'+escape(field.key)+'"')+' class="field-label">'+escape(field.label)+(field.type==='text'||field.type==='textarea'?'<span>选填</span>':'')+'</'+(['choice','cascade'].includes(field.type)?'div':'label')+'>'+body+(field.help?'<p class="field-help">'+escape(field.help)+'</p>':'')+'</div>';
   }
   function render() {
-    $('fields').innerHTML = '<nav class="section-tabs" aria-label="角色设定分类">'+sections.map((s,i)=>'<button type="button" data-section="'+s.id+'" aria-pressed="'+(active===s.id)+'" class="section-tab'+(active===s.id?' selected':'')+'"><span>0'+(i+1)+'</span>'+escape(s.title)+'</button>').join('')+'</nav>'+sections.map(s=>'<section class="setting-pane" '+(s.id===active?'':'hidden')+' aria-label="'+escape(s.title)+'"><p class="pane-description">'+escape(s.description)+'</p>'+s.fields.map(renderField).join('')+'</section>').join('');
+    $('fields').innerHTML = '<nav class="section-tabs" aria-label="角色设定分类">'+sections.map((s,i)=>'<button type="button" data-section="'+s.id+'" aria-pressed="'+(active===s.id)+'" class="section-tab'+(active===s.id?' selected':'')+'"><span>0'+(i+1)+'</span>'+escape(s.title)+'</button>').join('')+'</nav>'+sections.map(s=>'<section class="setting-pane" '+(s.id===active?'':'hidden')+' aria-label="'+escape(s.title)+'">'+(s.description?'<p class="pane-description">'+escape(s.description)+'</p>':'')+s.fields.map(renderField).join('')+'</section>').join('');
     updateOutput();
   }
   function updateOutput() {
