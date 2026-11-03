@@ -23,8 +23,9 @@
   };
   const fixed = {
     opening: 'Professional character reference sheet, three views arranged side by side, each occupying one third of the frame width, 16:9 aspect ratio. Very light neutral-grey seamless backdrop, approximately #EDEDED — bright, near-white pale grey, not medium grey or dark grey. Keep the backdrop evenly lit and consistent in tone, with only faint soft contact shadows at the feet. All three views share this one single continuous backdrop — no divider lines, no borders, no gaps, no frames, no separators between the views; the backdrop flows seamlessly across the entire image as one unbroken space.',
-    left: 'LEFT VIEW: full body, front view, standing upright in a natural relaxed stance like a fashion lookbook photo, arms hanging straight down naturally at the sides, hands relaxed with fingers gently curled inward. Not an A-pose, not a T-pose, not a 3D-model rig pose. The outfit is displayed in invisible ghost-mannequin style, as if worn by an invisible person: above the collar there is simply empty space blending into the background. No head, no face, no neck stump, no cut surface, no severed edge, no visible flesh above the collar — the collar opening is just empty.',
-    center: 'CENTER VIEW: full body, back view, same standing pose, same outfit. The head is kept in this view, showing the back of the head and the hairstyle from behind. No face visible.',
+    subjects: 'SUBJECT MAP: The three sections depict different objects: LEFT is a clothing-only front display on an invisible support; CENTER is the reference person seen full-length from behind, including the back of the head and both human hands; RIGHT is a chest-up portrait of the reference person, preserving the facial features. The reference face belongs ONLY in RIGHT. Reference hair belongs ONLY in CENTER and RIGHT. Skin, gaze and expression instructions never add a visible person to LEFT. These section-specific subjects take precedence over appearance consistency.',
+    left: 'LEFT VIEW: clothing-only, front-facing, complete outfit display with natural worn volume and drape, supported invisibly. Display the garments from neckline to hems, including footwear if part of the outfit. Sleeves hang naturally at the sides and end in empty, hollow cuffs, with no hands or fingers emerging. Show only clothing: no human head, face, hair, neck, hands, fingers, exposed skin, visible body or visible mannequin parts anywhere in this section. The neckline, cuffs and uncovered gaps reveal the same backdrop; no flesh, stumps or cut surfaces. This is a garment product display, not a front-view photograph of the person.',
+    center: 'CENTER VIEW: the reference person, full body, back view, standing upright naturally in the selected outfit. Keep the entire back of the head and the hairstyle visible from behind; no face visible. Both arms hang naturally at the sides, with both human hands visible below the sleeve cuffs, relaxed with fingers gently curled inward. Keep both hands within the frame, outside pockets and clear of the torso; do not remove the hands or apply the invisible-support effect here.',
     noText: 'Absolutely no text, no labels, no captions, no watermarks, no letters, no numbers, no logos anywhere in the image. Visual panels only.',
   };
   const get = (label, value) => phrase[label + '|' + value] || E.text(value);
@@ -111,7 +112,7 @@
     const state = skinStates[has(skinStates, v.skinState) ? v.skinState : '自然半哑光'];
     const detail = skinDetails[has(skinDetails, v.skinDetail) ? v.skinDetail : '自然'];
     return {
-      state: 'SKIN STATE: ' + state.surface,
+      state: 'SKIN STATE: Applies only to visible skin in CENTER and RIGHT. ' + state.surface,
       fullBody: 'For any exposed skin in this full-body view, describe overall tone and broad surface reflectance only, clearly distinct from clothing sheen. Keep detail appropriate to this view\'s scale.',
       portrait: [
         'PORTRAIT SKIN: ' + detail,
@@ -119,7 +120,7 @@
         state.reflection,
         'Let the selected expression naturally shape the eyelids, cheeks and lips; fine texture follows the current facial contours.',
       ].join(' '),
-      continuity: 'SKIN CONSISTENCY: Keep the requested skin tone, reference-visible marks and chosen skin state consistent wherever skin is visible across the views. Preserve the reference subject\'s age, facial proportions and natural asymmetry; only shading and apparent detail change with orientation and view scale. Avoid uniform stamped-on texture, excessive smoothing and waxy or plastic skin.',
+      continuity: 'SKIN CONSISTENCY: Only CENTER and RIGHT contain visible skin. Keep the requested skin tone, reference-visible marks and chosen skin state consistent between these two views, where observable. In RIGHT preserve the reference subject\'s age, facial proportions and natural asymmetry; shading and apparent detail respond to orientation and view scale. Avoid uniform stamped-on texture, excessive smoothing and waxy or plastic skin. LEFT remains clothing-only, without visible skin or hands.',
     };
   }
 
@@ -136,28 +137,29 @@
 
     const angle = (!same(v.portraitAngle) && get('上半身角度', v.portraitAngle)) || phrase['上半身角度|正面'];
     const performance = resolvePerformance(v);
-    // CC8:性别不再有选项——CHARACTER 行与性别段无条件锚定参考图(v4 同款;脸部照片必填使然)
+    // 身份与外形设定受 SUBJECT MAP 约束，不能把右侧人脸要求传播到左侧服装。
     const character = description.length
-      ? 'CHARACTER: ' + description.join(', ') + '. Any attribute not specified above must exactly match the attached reference image.'
-      : 'CHARACTER: exactly match the attached reference image — same face, hair, body, and outfit.';
-    const gender = 'Gender and facial features must exactly match the attached reference image — same gender, same face, same facial structure. Never change the gender from the reference.';
+      ? 'CHARACTER: ' + description.join(', ') + '. Apply clothing choices to all sections, body proportions only to the person in CENTER and garment fit in LEFT, hair choices only to CENTER and RIGHT, and eye color only to RIGHT. Unspecified visible attributes follow the reference within each section\'s subject definition.'
+      : 'REFERENCE SCOPE: Use the reference outfit for all sections, reference body proportions for the person in CENTER and garment fit in LEFT, and reference hairstyle for CENTER and RIGHT. Preserve the reference face only in RIGHT; do not turn LEFT into another image of the person.';
+    const portraitIdentity = 'PORTRAIT IDENTITY: In RIGHT, gender and facial features must exactly match the attached reference image — same gender, same face, same facial structure. Retain the reference subject\'s age and natural facial asymmetry.';
     const photoStyle = same(v.photoStyle) ? '逼真真人' : E.text(v.photoStyle);
     const skin = resolveSkin(v, photoStyle);
     const lighting = skin
       ? 'LIGHTING: One large soft studio key light from camera-left, with gentle fill preserving facial structure on the shadow side. Smooth tonal transitions follow the forehead, nose and cheekbones. Keep this lighting setup consistent across all views, with the pale-grey background evenly lit separately; skin highlights follow the chosen surface state.'
       : 'LIGHTING: Consistent soft studio illumination across all views, appropriate to the selected visual style.';
     // 先解析状态，再按视图编译；真人区域纹理只进入右侧胸像。
-    const parts = [fixed.opening, 'STYLE: ' + get('照片风格', photoStyle), character, gender, lighting];
+    const parts = [fixed.opening, fixed.subjects, 'STYLE: ' + get('照片风格', photoStyle), character, lighting];
     if (!E.omitted(v.etc)) parts.push(E.text(v.etc));
     if (skin) parts.push(skin.state);
-    parts.push(fixed.left + (skin ? ' ' + skin.fullBody : ''), fixed.center + (skin ? ' ' + skin.fullBody : ''));
+    parts.push(fixed.left, fixed.center + (skin ? ' ' + skin.fullBody : ''));
     parts.push([
       'RIGHT VIEW: one tight chest-up portrait, ' + angle + ', the bottom edge of the frame cuts at mid-chest level — only the head, shoulders and upper chest are visible, the face fills most of its section, face in sharp focus. Do not show the waist, stomach, or lower torso. Fitted inside its own one-third section at the same width and scale proportion as the two full-body views — it must not spread wider than the other views.',
+      portraitIdentity,
       'Expression: ' + performance.expression + '.', performance.gaze,
       skin ? skin.portrait : '', skin ? performance.eyeDetail : '',
       'This portrait is the only place the face appears on this sheet.',
     ].filter(Boolean).join(' '));
-    parts.push('Identical character, hair, and outfit across all views, with consistent proportions.');
+    parts.push('CROSS-VIEW CONSISTENCY: Match garment design, color, fabric and fit across all sections. Match hairstyle between CENTER and RIGHT. Identity continuity applies only to the person in CENTER and RIGHT. Preserve the distinct subjects: clothing-only LEFT without head or hands, full person from behind in CENTER with head and hands, facial portrait in RIGHT.');
     if (skin) parts.push(skin.continuity);
     parts.push(fixed.noText);
     return parts.join('\n\n');

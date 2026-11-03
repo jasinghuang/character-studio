@@ -35,7 +35,7 @@ test('仅修改发色不会产生重复 hair，自定义风格按原文生效',a
 test('真人肤质按景别分配，保留参考身份且不在全身视图堆叠面部细节',async()=>{
   const {schema,build}=await setup();const text=build(schema.defaults);
   assert.equal(schema.defaults.photoStyle,'逼真真人');
-  assert.match(text,/SKIN STATE: Natural semi-matte skin/);
+  assert.match(text,/SKIN STATE: Applies only to visible skin in CENTER and RIGHT\. Natural semi-matte skin/);
   const fullBody=text.slice(text.indexOf('LEFT VIEW:'),text.indexOf('RIGHT VIEW:'));
   assert.match(fullBody,/overall tone and broad surface reflectance only/);
   assert.doesNotMatch(fullBody,/pores|iris|under-eye|vellus|lip lines/i);
@@ -96,4 +96,39 @@ test('自定义情绪完整覆盖预设情绪、视线与睁眼细节，避免�
   assert.equal(text,build({...schema.defaults,emotion:'愤怒',gaze:'闭眼',emoNote:'双眼轻闭，平静地微笑'}));
   const flustered=build({...schema.defaults,emotion:'慌乱'});
   assert.doesNotMatch(flustered,/sweating drop/);
+});
+
+test('三块对象在所有风格中保持独立，左侧无头无手，中间保留后脑双手，右侧保留五官',async()=>{
+  const {schema,build}=await setup();
+  for(const photoStyle of ['逼真真人','超写实','游戏角色','动画电影','3D 渲染','纸感水彩插画']){
+    const text=build({...schema.defaults,photoStyle});
+    const left=text.slice(text.indexOf('LEFT VIEW:'),text.indexOf('CENTER VIEW:'));
+    const center=text.slice(text.indexOf('CENTER VIEW:'),text.indexOf('RIGHT VIEW:'));
+    const right=text.slice(text.indexOf('RIGHT VIEW:'),text.indexOf('CROSS-VIEW CONSISTENCY:'));
+    assert.match(left,/clothing-only/);
+    assert.match(left,/no hands or fingers emerging/);
+    assert.match(left,/no human head, face, hair, neck, hands, fingers, exposed skin/);
+    assert.doesNotMatch(left,/hands relaxed|full body, front view|For any exposed skin|PORTRAIT IDENTITY:/);
+    assert.match(center,/Keep the entire back of the head/);
+    assert.match(center,/both human hands visible below the sleeve cuffs/);
+    assert.match(center,/Keep both hands within the frame, outside pockets/);
+    assert.match(right,/PORTRAIT IDENTITY: In RIGHT/);
+    assert.match(right,/same face, same facial structure/);
+    assert.ok(text.indexOf('SUBJECT MAP:')<text.indexOf('REFERENCE SCOPE:'));
+    assert.doesNotMatch(text,/Identical character, hair, and outfit across all views|same standing pose|CHARACTER: exactly match/);
+  }
+});
+
+test('自定义外形仍被对象范围约束，肤质不再传播到左侧服装',async()=>{
+  const {schema,build}=await setup();
+  const text=build({...schema.defaults,hairColor:'黑色',eyeColor:'绿色',bodyType:'结实',outfit:'风衣',skinState:'雨后湿润'});
+  const left=text.slice(text.indexOf('LEFT VIEW:'),text.indexOf('CENTER VIEW:'));
+  const center=text.slice(text.indexOf('CENTER VIEW:'),text.indexOf('RIGHT VIEW:'));
+  const right=text.slice(text.indexOf('RIGHT VIEW:'),text.indexOf('CROSS-VIEW CONSISTENCY:'));
+  assert.match(text,/Apply clothing choices to all sections/);
+  assert.match(text,/hair choices only to CENTER and RIGHT, and eye color only to RIGHT/);
+  assert.match(text,/SKIN STATE: Applies only to visible skin in CENTER and RIGHT/);
+  assert.doesNotMatch(left,/Residual rain moisture|overall tone and broad surface reflectance|PORTRAIT SKIN:/);
+  assert.match(center,/overall tone and broad surface reflectance only/);
+  assert.match(right,/Water creates localized specular reflections/);
 });
